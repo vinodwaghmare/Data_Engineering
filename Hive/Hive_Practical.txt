@@ -1,0 +1,98 @@
+
+Hive Tables : 
+
+1) Internal Tables ( Managed Tables)
+
+Metadata will be maintained by hive
+Actual data will be stored in hive warehouse
+While deleting the table it's schema & it's warehouse directory's data will be removed
+Faster Query performance due to data locality
+
+2) External Tables 
+
+Metadata will be maintained by hive
+Actual data will be at source location 
+While deleting the table it's schema will only be removed
+Lower Query performance due to data fecthing over network from hdfs or other sources 
+
+
+Hive Practical :
+
+1) Managed Table
+create database hive_db ;
+
+use hive_db ;
+
+create table department_data 
+( 
+dept_id int,
+dept_name string, 
+manager_id int,
+salary int ) 
+row format delimited 
+fields terminated by ',' ;
+
+show tables ;
+
+describe department_data ;
+
+describe formatted department_data ;
+
+
+# local fs to hive warehouse 
+load data local inpath 'file:///tmp/hive_loc/depart_data.csv' into table department_data;   # It will load data from local fs to hive table ;
+
+select count(*) from department_data ;
+
+hadoop fs -ls /user/hive/warehouse/hive_db.db/department_data  # It's location of loaded data from local fs into hive warehouse 
+
+# To view column name along with data, property needs to be set in hive
+set hive.cli.print.header = True ;
+
+
+
+# hdfs to hive warehouse 
+
+hadoop fs -ls /tmp
+
+hadoop fs -mkdir /tmp/hive_data   
+
+hadoop fs -put /tmp/hive_loc /tmp/hive_data           ( local to hdfs data copied ) 
+
+use hive_db ;
+
+create department_data_from_hdfs 
+( 
+dept_id int,
+dept_name string, 
+manager_id int,
+salary int ) 
+row format delimited 
+fields terminated by ',' ;
+
+# In hive we don't provide file name as file is distributed over nodes 
+load data inpath '/tmp/hive_data/' into table department_data_from_hdfs;   # It will load data from hdfs to hive table ;
+
+2) External Table
+
+create external table department_data_external 
+( 
+dept_id int,
+dept_name string, 
+manager_id int,
+salary int ) 
+row format delimited 
+fields terminated by ',' 
+location '/tmp/hive_data';                 # here we have mention the hdfs location
+
+hadoop fs -ls /tmp/hive_data              # data in this path is already moved while loading into hive warehouse , copy the file at this path again 
+
+Droping Internal & External table :
+
+drop table department_data;  ( schema deleted + DWs data deleted) 
+
+drop table department_data_from_hdfs;  ( schema deleted + DWs data deleted)
+
+drop table department_data_external;  ( Only schema deleted )
+
+
