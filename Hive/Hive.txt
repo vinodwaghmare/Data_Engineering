@@ -1,1 +1,72 @@
 
+Thrift Server : 
+
+Backend Daemon Service which runs the the Hive Engine
+Daemon Service will listen to incoming request for Hive Engine
+It is used to listen programmatically by ODBC/JDBC for Hive Engine
+
+
+
+
+
+Hive Driver :
+
+Controller for HQL statements
+Creates sessions for Query
+Maintain Lifecycle of HQL
+maintain metadata for execution
+Collects output and display
+
+SQL check :
+
+Syntax & Symentics --> Execution plan --> Optimization --> Processing.
+
+Parsing + Planner -> Compilation :
+
+Syntax check --> Execution plan --> Steps to get the Output --> Raise Compile Time Error.
+
+Optimiser :
+
+It will perform permuttation & combination 
+Compare Execution plans --> Calculate Cost --> Execution plan/DAG --> Try to place or combine transformations together 
+Eg : groupby + where (e1 plan) , where + groupby (e2 plan) 
+
+Hive Metastore :
+
+It used to store metadata of the actual data like db, table, schema etc.
+It uses Derby DB by default RDBMS but fault here is we can't use more than 1 connections ( eg. connecting multiple from multiple programs ).
+Anytime reinstalling hive the derby db info data will be removed.
+
+
+P1 --> (ok) --> Hive
+P2 --> (Not) ---> Hive
+
+External Metastore : 
+
+Multiple concurrent connections
+Metadata Backup
+Data Security
+Expose to external use cases ( We can check how tables created, volumes of data grown, space cleanup, automated script)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
