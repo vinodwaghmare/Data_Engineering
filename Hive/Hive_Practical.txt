@@ -61,7 +61,7 @@ hadoop fs -put /tmp/hive_loc /tmp/hive_data           ( local to hdfs data copie
 
 use hive_db ;
 
-create department_data_from_hdfs 
+create table department_data_from_hdfs 
 ( 
 dept_id int,
 dept_name string, 
@@ -165,9 +165,6 @@ size(details) as size_of_each_map,
 map_keys(details) as distinct_map_keys,
 map_values(details) as distinct_map_values
 from employee_map_data
-
-
-
 from employee_map ;
 
 
