@@ -1,0 +1,8 @@
+
+Steps for mount point between local and cloudera
+
+1) Go to local machine & create folder 
+2) Create folder in cloudera machine
+2) In cloudera machine --> devices --> shared folders --> machine folder -> select path of folder created on local
+3) Login to root user --> ( su, password )
+4) Enter command mount -t vboxsf folder[local] folder[cloudera]
