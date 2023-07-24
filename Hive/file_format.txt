@@ -1,0 +1,166 @@
+
+
+File Formats : 
+
+In storage location data is stored in bytes form
+1 bytes = 8 bits 
+Any value a = 4 ( where a is variable represents the address for the value )
+We now value can be of different data types & each data types holds different bytes to store the data
+Int - 4 bytes
+Char - 1 bytes 
+float - 4, 6, 12 bytes 
+
+Let's consider a dataset 
+
+name, salary
+Ron,  1700
+Mac,  2000
+Sam,  4000
+
+Here we need to calculate the bytes to store
+1 row = 10 bytes (name) + 2 bytes ( title) + 8 bytes ( int ) = 20 bytes  
+then for 3 rows = 3 * 20 bytes = 60 bytes needs for storage
+
+if we contains 1000 rows then 1000 * 18 = 18000 = 18 MB
+
+
+
+
+Row Columnar Format :
+
+In databases data are  store row columnar format 
+
+Let's consider table in mysql or any rdbms 
+
+name, title, salary
+Ron, DE, 1700
+Mac, QA , 2000
+Sam, SDE, 4000
+
+How it stores in backend 
+assume x1000 is start loc
+
+mem loc - x1000, x1003 , x1005 , x1006, x1009, x1011 
+values -  Ron  ,    DE ,  1700 ,  Mac ,  QA  , 2000
+
+If we run query on it like
+select sum(salary) from table;
+
+To do perform sum of salary it needs to navigate/traverse through all the values
+start loc ( disk read header ) --> x1000
+end loc --> x10..(last value) 
+
+In Disk have read header, writer 
+
+
+
+Columnar Format ::
+
+In Datawarehouses Data Stored in Columnar Format 
+Used for frequent analytical query
+
+Name - Ron , Mac, Sam
+title - DE, QA, SDE
+Salary - 1700, 2000, 4000
+
+mem loc - x1000, x1003 , x1005 , x1006, x1009, x1011 
+values - Ron , Mac, Sam, DE, QA, SDE
+
+Disk Reader will be faster due to  data stored in contigous memory location
+
+NoSQL  -> Key, Value, Document, Columnar
+
+Types of File Formats :
+1) Parquet (Columnar)
+2) ORC (Columnar)
+3) Avro (Row-Columnar)
+
+1) parquet 
+Preffered for spark 
+
+2) ORC
+Preffered for hive
+
+3) Avro 
+For Frequent write & update
+
+In CSV, JSON stores data in any file system in orginal form with their data type
+But Parquet,avro,orc stores data in default compressed form
+
+Advantages of columnar file format
+- Fast analytical query
+- compression   ( ORC > parquet > Avro ) 
+
+
+Serialization & Deserialization :: 
+
+1) Serialization
+Converting variable/object/orginal data types into typical bytes form
+
+Advantages of serialisation
+- Data in bytes
+- Fast transmission over network
+- Less data size
+
+2) Deserialization 
+Converting bytes data into it's orginal form/object
+
+Eg : 
+we seralised the object of class student then its should deserialized using class student for consistency & compatibility
+
+
+Important : 
+Schema on Read
+Schema on Write
+
+Hive is Schema on Read
+When we create a hive table and load the data it doesn't check the schema but when we do query on the table it will check whether data is present as per schema
+
+data file  --> write data into table --> Hive engine --> store data in hive warehouse dir --> now perform sql query on table --> schema read will happen (csv, json) 
+& in case (parquet, orc, avro ) schema read  + deserialisation will happen
+
+How to load data in parquet table ?
+1st way
+csv file --> convert to parquet file --> put into hdfs --> perform load command into parquet table
+2nd way
+csv file --> create csv_table --> load data into csv_table --> create parquet_table --> use insert command to copy data from csv_table to parquet_table 
+
+Remember that Hive will automatically perform conversions between formats during the insert process. 
+Here eg : 1st row of sales_table data  (shoes, 2000) is a row object and we know objects can be serialised and we are inserting into parq table
+
+# first load data as csv
+
+create table sales_data_v2                                                                                                              
+    > (                                                                                                                                       
+    > p_type string,                                                                                                                          
+    > total_sales int                                                                                                                         
+    > )                                                                                                                                       
+    > row format delimited                                                                                                                    
+    > fields terminated by ','; 
+    
+    
+load data local inpath 'file:///tmp/hive_loc/sales_data_raw.csv' into table sales_data_v2; 
+
+# command to create identical table or backup table
+create table sales_data_v2_bkup as select * from sales_data_v2;
+
+# describe command for a table
+describe extended sales_data_v2;
+
+
+# create a table which will store data in parquet
+
+create table sales_data_pq_final                                                                                                        
+    > (                                                                                                                                       
+    > product_type string,                                                                                                                    
+    > total_sales int                                                                                                                         
+    > )                                                                                                                                       
+    > stored as parquet;  
+    
+# load data in parquet file
+from sales_data_v2 insert overwrite table sales_data_pq_final select *;
+
+
+
+
+
