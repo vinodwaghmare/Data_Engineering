@@ -125,8 +125,12 @@ csv file --> convert to parquet file --> put into hdfs --> perform load command 
 2nd way
 csv file --> create csv_table --> load data into csv_table --> create parquet_table --> use insert command to copy data from csv_table to parquet_table 
 
+Note : from csv_table to parquet_table both tables data will be converted into parq if no source csv_table mention stored as text_file 
+
 Remember that Hive will automatically perform conversions between formats during the insert process. 
 Here eg : 1st row of sales_table data  (shoes, 2000) is a row object and we know objects can be serialised and we are inserting into parq table
+
+
 
 # first load data as csv
 
@@ -159,6 +163,8 @@ create table sales_data_pq_final
     
 # load data in parquet file
 from sales_data_v2 insert overwrite table sales_data_pq_final select *;
+
+
 
 
 
