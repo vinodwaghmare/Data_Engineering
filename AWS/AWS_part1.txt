@@ -1,0 +1,63 @@
+Types of AWS service :
+
+Computing Services :
+1) EC2 ( Elastic Cloud Compute )
+2) Lambda ( Serverless Service )
+
+Storage Services :
+s3 ( Simple Storage Service )
+
+Database Services :
+1) RDS ( Relational Database Service )
+2) Athena ( Serverless Database Service )
+
+No SQL Database :
+1) AWS Dynamo ( key value type of db ) 
+
+Datawarehousing : 
+1) Redshift 
+
+Analytic : 
+1) EMR (Elastic Map Reduce ) 
+2) Glue ( Distributed )
+3) Kinesis ( for streaming ) 
+4) SQS ( Simple Queuing Service )
+5) Quicksight ( Dashboarding )
+
+Monitoring & Scheduling :
+1) CloudWatch
+
+Notification :
+1) SNS ( Simple Notification Service )
+
+Access Management :
+1) IAM 
+
+
+S3 Objects :
+Uploaded or created data/files in s3 bucket
+
+S3 URI (Universal Resource Identifier):
+It's the absolute path for any object inside the s3
+s3:///bucket/folder/file.txt
+filesystem:///bucket_name/prefix/object_name
+
+
+key -> prefix + object_name
+folder/file.txt
+key is used to locate each object in s3
+
+
+Amazon Resource Locator ( ARN ) :
+It is used for interaction between services
+
+arn:aws:s3:///bucket/folder/file.txt  -> arn for object
+arn:aws:s3:///bucket  -> arn for bucket
+
+Eg: AWS lambda needs to interact with AWS bucket so in bucket policy we need to mention  ARN of lambda function 
+
+Object URL :
+It's kind of endpoint generated for object so it can be accessed publicily using api etc
+https://bucket/region/folder/file.txt
+
+
