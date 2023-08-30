@@ -1,0 +1,90 @@
+Lambda Function :
+=======================
+
+Lightweight Serverless Service
+Runs event driven functions
+No Need for infa setup
+Requires Runtime only
+
+Works on trigger which can be provided manually or api or through aws services.
+
+Practical : lambda with manual trigger
+import json
+
+def add(a,b):
+    return a+b
+
+def lambda_handler(event, context):
+    print("Hey I'm lamda function ")
+    print("sum of two numbers a,b = ",add(2,3))
+    print(event)
+    print(context)
+
+lambda function contains by default lambda_handler func which contains 
+input param -> event , context
+event variable contains the json input 
+context variable contains the metadata related to lambda func
+
+All services which generates log Metrics are stored in CloudWatch Service
+
+IAM
+=========
+To restrict access to the service
+When to two services needs to communicate we need to set few polcies
+Its helps to provide permission, roles, set policies for users to specific access to aws service
+
+Eg : D1,D2, D3 are developers
+Admin(Infa, DevOps) will provide access to Developers 
+D1 :- r,w,d (iam role1)
+D2 :- r,w (iam role2)
+D3 :- r (iam role3)
+
+IAM User : Different login for each user
+IAM Role : Contains policies to access aws resources
+
+Lambda <--> S3 ---> need iam role policies
+
+Now if we want to interact with s3 bucket we need permissions
+so we can create a custom role for lambda ---> attach or create policy such as s3 access by giving s3 arn with permissions
+
+IAM --> Role  --> policy --> permissions 
+
+import json
+import boto3
+
+s3 = boto3.resource('s3')
+
+practical : access s3 via lambda 
+---------------------------------
+def lambda_handler(event, context):
+    bucket = s3.Bucket('bucket1-basic1')
+    print('Here ',bucket.objects.all())
+    for obj in bucket.objects.all():
+        key = obj.key
+        print(key)
+
+lambda limit :
+15 min execution
+3 gb memory limit
+6 mb limit size
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
