@@ -70,6 +70,24 @@ lambda limit :
 
 
 
+AWS EMR
+=========
+
+EMR (Elastic Map Reduce) 
+It cluster service which supports infa setup + frameworks installation
+
+EMR architecture contains 3 nodes
+1) Primary Node : Software components on this node helps in scheduling, monitoring, dtstributing tasks to orchestrating tasks to other nodes,
+check healths etc
+2) Core Node : It performs actual execution of the tasks & store results in the hdfs, it part of hdfs
+3) Task Node(optional) : It supports scaling of execution for rapid increase results.
+
+EMR invoke EC2 instances at the backened
+
+Command to run spark job on EMR :
+spark-submit --master yarn --deploy-mode cluster test-pyspark.py
+
+
 
 
 
