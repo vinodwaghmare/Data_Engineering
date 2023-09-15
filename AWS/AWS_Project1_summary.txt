@@ -1,0 +1,10 @@
+AWS services used
+S3: To store raw data
+lambda : Generate mock data in json object form, 
+Crawler : Prepare metadata schema log for raw structured files
+Glue : Performing Transformation
+Cloudwatch : to view logs and monitoring the pipeline
+Eventbridge : To send scheduled notification trigger to the lambda function 
+Scheduler : Use Crawler & glue scheduler for automation 
+Athena : Connect to result output source file and crawler metadata table to read & perform query efficiently
+
