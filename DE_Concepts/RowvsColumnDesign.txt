@@ -42,3 +42,5 @@ dob, joining_date will be inserted one time, so no changes or updates happens on
 
 Note : 
 For event driven system use row design data model to capture changes efficiently 
+Row design are efficient for database, OLTP systems
+Column Design are efficient for datawarehouse, OLAP systems
