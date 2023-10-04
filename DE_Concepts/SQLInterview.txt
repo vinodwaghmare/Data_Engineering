@@ -1,0 +1,35 @@
+User_id, iphone_model
+1,i-11                 , 0, 2
+1,i-15                , 1, 2
+2,i-15                , 1, 1
+
+Solution 1
+=================
+with only_one_phone as (
+select User_id from table 
+group by User_id
+having count(User_id) == 1 
+) 
+select * from only_one_phone p inner join table  t
+on p.User_id = t.User_id
+where iphone_model = 'i-15'
+
+Solution 2
+================
+with cte as (
+select 
+user_id,
+count ( case when iphone_model = 'i-15' then 1 else 0 end ) as flag_cnt,
+count ( iphone_model ) as total_cnt
+from table
+group by user_id
+)
+select user_id from cte where flag_cnt = total_cnt
+
+cte result
+-------------
+User_id, iphone_model, flag_cnt, total_cnt
+1,i-11  , 0, 2
+1,i-15  , 1, 2
+2,i-15  , 1, 1
+
