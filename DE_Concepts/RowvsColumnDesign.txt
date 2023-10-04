@@ -1,0 +1,44 @@
+Data Modeling
+Row vs column design 
+
+ Eg : Spotify Design
+1) Column Design 
+
+User id, app-installed-date, in-app-purschase-date, unistalled-date
+1, 2020/9/10,                  ,2020/10/12
+2, 2020/2/13, 2020/3/12        , 
+
+First we are inserting 2 rows 
+Every time new purchase, unistallement etc happens we need to update the record 
+if suppose their are 1 million rows and any above updates happens it needs to be done on those rows &  many null values 
+will also be present inside it, so it's costly operation interms of execution & space 
+
+2) Row Design 
+
+User_id, Activity_name, date
+1, app-installed-date, 2020/9/10
+2, app-installed-date ,2020/2/13
+1, unistalled-date, 2020/10/12'
+2,in-app-purschase-date, 2020/3/12
+
+In row design we converted column into row values of activity column so
+any changes happens will be inserted as new record
+In Column design we needed to search user_id to update the record in row design we just need to insert any update 
+
+Condition 
+if we need to add new column as ( app-premium-purchase )
+then in column design we to add column & it's not preferred in production 
+But in row design we only need to insert the change no need to change structure of data model 
+
+
+Report
+for report we need to have columns to just apply select query and get the columns 
+which can is achieved in column design
+but for row design we need to convert it into columns 
+
+Which column not to convert to rows
+user_id, dob, joining_date.
+dob, joining_date will be inserted one time, so no changes or updates happens on this column
+
+Note : 
+For event driven system use row design data model to capture changes efficiently 
