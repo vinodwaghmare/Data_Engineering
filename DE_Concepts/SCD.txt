@@ -1,0 +1,43 @@
+Slowly Changing Dimensions in Datawarehousing with iphone example
+
+scd1 
+---------
+product table 
+
+product_id, product_name, category, price, update_date 
+1, iphone, mobile, 8000, 2020-03-01 
+
+in scd1 records always updated & it doesn't store historical data
+we can use it for eg : employee designation even it's change we don't track it's previous designation
+
+scd2
+-----------
+product_id, product_name, category, price, effective_date, expire_date, current_flag 
+1, iphone, mobile, 8000, 2020-01-02, 2020-02-28, 0
+1, iphone, mobile, 10000, 2020-03-01, 2020-03-31, 0
+1, iphone, mobile, 7000, 2020-04-01, 9999-12-31, 1
+
+in scd2 we are tracking previous prices and when it got changed 
+if we need to do analytics like find 2900 units sales price from Jan till March 
+so we have to consider price in each month 
+
+We also need to surrogate key for each record for more unique identification 
+
+product_key, product_id, product_name, category, price, effective_date, expire_date, current_flag 
+1, 1, iphone, mobile, 8000, 2020-01-02, 2020-02-28, 0
+2, 1, iphone, mobile, 10000, 2020-03-01, 2020-03-31, 0
+3, 1, iphone, mobile, 7000, 2020-04-01, 9999-12-31, 1
+
+
+
+scd3 
+-----------
+product_key, product_id, product_name, category, price, previous_price, update_date
+1, iphone, mobile,10000, 8000, 2020-03-01 
+1, iphone, mobile, 7000, 10000,2020-04-01 
+
+Note : 
+scd1 & scd2 are mostly used
+
+
+
