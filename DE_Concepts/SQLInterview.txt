@@ -1,7 +1,10 @@
 User_id, iphone_model
-1,i-11                 , 0, 2
-1,i-15                , 1, 2
-2,i-15                , 1, 1
+1,i-11                 
+1,i-15                
+2,i-15           
+
+1) Find iphone users who only have i-15 model
+---------------------------------------------
 
 Solution 1
 =================
@@ -32,4 +35,72 @@ User_id, iphone_model, flag_cnt, total_cnt
 1,i-11  , 0, 2
 1,i-15  , 1, 2
 2,i-15  , 1, 1
+
+2) Find iphone users who only have upgraded from i-12 to 1-15 model
+--------------------------------------------------------------------
+
+User_id, iphone_model
+1,i-11                 
+1,i-15                
+2,i-15           
+3,i-12
+3,i-15
+
+Solution
+select 
+user_id
+from mobile
+group by user_id
+having count(iphone_model) = sum(case when iphone_model= 'i-15' then 1 when iphone_model =  'i-12' then 1 else 0 end) 
+
+3) Find total no. of users buying i-15 for first time & no. of users upgrading from any model to iphone 15
+
+with CTE as (
+select 
+user_id
+count(case when iphone_model = 'i-15' then 1 else 0 end) as flag_cnt
+count(iphone_model) as total_cnt
+from 
+mobile
+group by user_id
+) 
+select sum(user_id) from CTE where total_cnt = flag_cnt
+, cte1 as (
+  select 
+user_id
+count(case when iphone_model = 'i-15' then 1 else 0 end) as flag_cnt
+count(iphone_model) as total_cnt
+from 
+mobile
+group by user_id
+)
+select count(user_id) from cte1 where total_cnt > 1
+
+
+
+select 
+1  1  2
+3 1  2
+
+
+select 
+user_id
+from
+mobile
+group by user_id
+having distinct( count (iphone_models) ) =  select count(*) from product_dim
+
+what if other products in product_dim
+
+use join
+select 
+user_id
+from
+mobile p1 join product_dim p2
+on p1.iphone_model = p2.product_no.
+group by user_id
+having count( p1.iphone_model ) = select count( p2.product_no ) from product_dim 
+
+
+
 
