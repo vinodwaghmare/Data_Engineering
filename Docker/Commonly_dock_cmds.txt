@@ -2,6 +2,42 @@ While installing docker one docker group is creaded name docker group
 if user added to those grps don't need to add sudo cmd
 
 cmd for docker engine info
+---------------------------
 docker info
 
-list down the docker images in 
+verify the docker images in docker engine registry
+--------------------------------------------------
+docker images
+
+
+TO find images for specific topic
+-------------------------------------
+docker search topic-name
+eg docker search python
+
+Pull images for docker hub will be added local registry
+-----------------------------------
+docker pull python
+
+List of containers which are running
+----------------------------------------
+docker ps
+
+Start the docker container
+-------------------------------------
+docker run -it python 
+
+stop the docker container
+------------------------------------
+docker stop container_id
+
+start the docker container
+--------------------------------------
+docker start container_id
+
+stats of containers
+------------------------------
+docker stats
+
+
+
