@@ -1,0 +1,15 @@
+
+DOCKER
+==========
+It's software platform which builds, test, deploy applications on containers on the top the server
+Docker software packages create a standard unit called containers.
+containers where all the libraries, dependencies, system tools, runtime is provided to run the application seamlessly
+
+Server host --> Hypervisor --> Guest OS --> Docker Engine --> App1, App2 ( with dependencies )
+
+Use of Docker
+=================
+- It ships software 7x faster then non docker users
+- It Standardize operations -> Small containerised application makes it easy to deploy, identify issues, & rollback for remediation
+- Seamlessly Move -> DOcker based application can seamlessly move code from dev to prod 
+- save money - run diff apps on same server
