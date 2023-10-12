@@ -1,0 +1,7 @@
+While installing docker one docker group is creaded name docker group 
+if user added to those grps don't need to add sudo cmd
+
+cmd for docker engine info
+docker info
+
+list down the docker images in 
