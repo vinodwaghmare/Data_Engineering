@@ -1,0 +1,36 @@
+Docker compose is tool for defining and running multiple container docker applications.
+with compose we use yaml file for the configuration of application services
+
+Steps
+1) Install Docker compose 
+
+curl github
+chmod docker-compose
+touch docker-compose.yml
+
+2) Create directory & docker compose file 
+
+vi docker-compose.yml
+
+version :'3'
+services :
+
+  web :
+    image : nginx
+    ports :
+        - "8080:80"
+
+  database :
+    image : mysql
+    environment :
+        MYSQL_ROOT_PASSWORD : Welcome1
+
+3) Check the validity of file
+
+docker-compose config
+
+4) Run docker-compose.yml file
+
+docker-compose up -d
+
+while running the file it will create docker images + container from it
