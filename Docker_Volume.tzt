@@ -1,0 +1,27 @@
+
+Volumes 
+=============
+- Volumes are preffered way/mechanism for presisting data generated or used by docker containers
+- In simple terms, volumes are directories or files that are outside the default file system present on host file system
+
+create volumes
+-----------------
+docker create testvol1
+
+check or validate volume
+------------------------
+docker inspect testvol1
+
+pull zepplein notebook
+------------------------
+docker pull apache/zepplin:0.8.2
+
+Run docker container without volume
+-----------------------
+docker run -d -p 8080:8080 -e ZEPPLIN_ADDR='0.0.0.0' --name zepplin-demo-1 apache/zepplin:0.8.2
+
+Run docker container with volume
+-----------------------------------
+docker run -d -p 8080:8080 -e ZEPPLIN_ADDR='0.0.0.0' --v testvol1/log -v testvol1/notebook 
+-e ZEPPLIN_LOG_DIR='/logs'  -e ZEPPLIN_NOTEBOOK_DIR='/notebooks' --name zepplin-demo-1 apache/zepplin:0.8.2
+
