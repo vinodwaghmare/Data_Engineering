@@ -1,0 +1,9 @@
+
+3 stage architecture
+
+local operations
+
+Working directory : Location of directories and files of a single commit.
+Staging area : Location of files planned for next commit, stage the file for QC
+git directory : commit files into git repo,  Location of all commits of the project
+
