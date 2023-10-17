@@ -1,0 +1,25 @@
+
+Intial git repo will make a current repo as git repo & keep track of changes
+=======================
+git init 
+
+Check status
+====================
+git status
+
+Bring the files in the staging area
+====================================
+git add --a
+
+Commit the staged files to get the snapshot of it
+====================================================
+git commit -m "Intial Commit"
+
+git log to see the commit done
+===================================================
+git log
+
+
+flow
+add content in file -> stage --> commit 
+again add in file --> stage --> commit
