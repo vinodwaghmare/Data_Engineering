@@ -1,3 +1,9 @@
 command to delete the git repo
 ===================================
 rm -rf .git
+
+clone repo from gitub
+======================================
+git clone url 
+
+
