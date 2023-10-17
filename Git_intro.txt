@@ -1,0 +1,22 @@
+Git is a version control system
+
+easily recover files
+Who introduced the issue and when
+Rollback to previous working state
+
+History 
+local VCS
+Centralised VCS
+distributed  VCS : complete backup will be recieved an individual
+
+Github, Gitlab, bitbucket are the hosting services of git repository
+
+Features : 
+Capture snapshot not difference
+.git folder contains history of the project which save snapshot
+Almost every operation is local except push pull etc
+Git has integrity 
+    checksum: if someone download file from internet and it's SHA checksum provided by the developer is not same then it's corrupted file
+    & git take care of it
+Git generally only adds data
+
