@@ -1,0 +1,3 @@
+command to delete the git repo
+===================================
+rm -rf .git
