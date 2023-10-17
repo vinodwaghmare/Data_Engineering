@@ -1,0 +1,10 @@
+
+config name & mail
+-----------------------------------
+git config --global user.name "name"
+git config --global user.name "email_id"
+
+get name & mail
+------------------------------
+git config user.name
+git config user.email
