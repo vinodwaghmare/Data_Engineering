@@ -1,0 +1,17 @@
+
+File Status LifeCycle
+
+1) Untracked :
+When we create or add files inside the git repository which are by default untracted by the VCS.
+
+2) Unmodified : 
+When we move the untracked files into staging area then those files gets tracked by VCS.
+
+3) Modified :
+Any changes done on the tracked file or edit the file which was in the staging area it will be modified 
+
+4) Staged : 
+Modified files are ready to be staged for final commit and then moved it into unmodified form.
+
+
+untracked ---> add file ---> unmodified ---> edit the file ---> modified ---> stage the file --> stage ----> commmit ---> unmodified
