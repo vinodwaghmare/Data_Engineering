@@ -1,0 +1,21 @@
+
+Use git commands to remove the file
+===================================
+git rm file.txt
+
+It removed the file and staged it & then we can commit it
+
+Rename the tracked file
+================================
+git mv first.txt first_name.txt
+
+It renamed the file and staged it & then we can commit it
+
+Git ignore
+=========================
+When we mention any untracked file or dir in gitignore file the git will ignore those files or untrack it
+but when a tracked file is mentioned in git ignore the git will still try to track it
+Use below command to remove file from tracked  to untracked status
+git rm --cached file.txt
+
+
