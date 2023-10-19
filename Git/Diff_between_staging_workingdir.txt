@@ -1,0 +1,8 @@
+
+Commands shows the comparison between files which is staged and current working directory
+=====================
+git diff
+
+It shows the difference between previous commit & latest staging area
+=======================================================================
+git diff --staged
