@@ -1,0 +1,7 @@
+If we to skip the staging area use below command
+
+git commit -a -m "comment"
+
+It will commit tracked files without moving it for staging area.
+
+Untracked file will not be committed
