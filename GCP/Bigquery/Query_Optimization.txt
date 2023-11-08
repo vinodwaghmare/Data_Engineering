@@ -1,0 +1,98 @@
+
+limit :
+Optimization :- Yes
+real example
+table after query gives 132888 rows - 13.05 Mb scanned
+table after query using LIMIT to 100 rows - 13.05 mb scanned
+Speed - Bytes shuffled over the network is significantly reduces using limit
+Cost - Bytes processed remains same
+
+Select:
+Optimization :-  use
+select few columns as possible
+
+SELECT * EXCEPT (col1, col2, col5) FROM mydataset.newtable
+
+Observation in Job ececution graph :
+without partition & cluster it will fetch all the record rows
+
+Wildcard tables :
+Avoid accessive use of wildcard tables
+be more granular prefix while query wildcard tables
+eg : 
+select * from emp* (X)
+select * from emp194* (right) 
+
+Prune partitioned queries:
+
+
+
+Reduce data before using a JOIN :
+Use filtering then group by and after that join 
+Join & groupby does shuffling of data which is costly
+
+
+Use the WHERE clause :
+Where limit the amount of data the query return
+Where works great on int, float, boolean
+then string, bytes
+
+
+
+Avoid repeatedly transforming data: 
+ETL does transforms like that
+For example, if you are using SQL to trim strings or extract data by using regular expressions, 
+    it is more performant to materialize the transformed results in a destination table. 
+    Functions like regular expressions require additional computation.
+    Querying the destination table without the added transformation overhead is much more efficient.
+
+
+Avoid repeated joins and subqueries :
+Instead of repeatedly joining the data use nested repeated data (it saves bandwidth,I/o cost of reading and writing data)
+Repeating subqueries, avoid it instead materialise the subquery in some dest table and use, storing cost of subqueries results is less than multiple time processing it
+
+
+Optimize your join patterns: 
+Best practice: For queries that join data from multiple tables, optimize your join patterns by starting with the largest table.
+largest, smallest
+It will peform broadcast join where all the data in smaller table is send to slots which process larger table
+
+
+Optimize the ORDER BY clause:
+Use order by at the outmost of the query unless used in window function
+Use limit clause which will avoid execeeded resource error
+
+
+Use INT64 data types in joins
+Best practice: Use INT64 data types in joins instead of STRING data types to reduce cost and improve comparison performance.
+
+
+Materialize large result sets
+Best practice: Consider materializing large result sets to a destination table. Writing large result sets has performance and cost impacts.
+BigQuery limits cached results to approximately 10 GB compressed
+
+
+Avoid Anti-sql patterns
+=========================
+
+1) Avoid self join
+Best practice: Instead of using self-joins, use a window (analytic) function.
+
+2) Avoid cross join 
+Best practice: Avoid joins that generate more outputs than inputs. When a CROSS JOIN is required, pre-aggregate your data.
+
+3) Avoid DML statements that update or insert single rows
+UPDATE  dataset.t t  SET
+my_column = u.my_column
+FROM
+dataset.u u
+WHERE
+ t.my_key = u.my_key
+
+BigQuery DML statements are intended for bulk updates. 
+
+4) Filter data for skewed data
+Best practice: If your query processes keys that are heavily skewed to a few values, filter your data as early as possible.
+data skew, is when data is partitioned into very unequally sized partitions. This creates an imbalance in the amount of data sent between slots.
+
+
