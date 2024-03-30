@@ -1,0 +1,47 @@
+
+
+AWS Lambda Life Cycle Phase
+=====================================================
+
+
+
+
+Phase 1: INT Phase
+--------------------------------------------------
+
+Extension INIT
+RUNTIME INIT
+FUNCTION STATIC INIT
+
+RUNTIME INIT: It builds the runtime as per define
+
+FUNCTION INIT: It builds the function init which is used for the code mentioned outside the event handler function, 
+              eg: make a connection with db we do it one time, so every time the request invokes lambda the code outside handler will not execute and remains static,
+                    it only works once.
+
+Extension INT
+
+
+
+
+
+Phase 2: INVOKE Phase
+--------------------------------------------------
+
+At this phase, lambda is available to take requests and respond 
+At first time invocation the lambda will have call start ( build runtime )
+After the first invocation the lambda will have a warm start to take multiple requests
+
+
+
+
+
+
+Phase 3: SHUTDOWN Phase
+---------------------------------------------------
+
+Runtime shutdown
+Extension shutdown
+
+It shut down the runtime & if the runtime extension doesn't respond to lambda call it in 2 sec then it terminates using sigkill
+
