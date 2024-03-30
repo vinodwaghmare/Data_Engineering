@@ -1,0 +1,151 @@
+
+AWS Lambda Usage:
+---------------------
+1) File processing
+2) Stream processing
+3) Web applications
+4) IoT backends
+5) Mobile backends
+
+
+Applications :
+----------------------------
+Lambda application is combination of functions, trrigers & other resources wtih CICD pipeline.
+It contains template the build application+
+
+
+
+Functions:
+-----------------------------------------------
+This is the actual code that performs the task.
+
+
+
+
+Code Signing Configuration
+-----------------------------------------------
+It is process of digitally signing your functions code to ensure it's integrity and authencity which adds extra security layer to the lambda functions
+ensuring authorised & trusted code is executed.
+
+
+Layers
+-----------------------------------------------
+Layers are a way to manage and share common code and dependencies across multiple lambda functions.
+lib, dependencies, custom runtime
+We can have upto 5 layers where each layer 50 mb and max 250 mb size total
+
+
+
+Replicas
+-------------------------------------------------
+Replica is used for lambda edge to reduce the latency and increase the performance.
+
+
+
+Step Functions state machines
+--------------------------------------------------
+AWS step functions is an orchestration service let's you connect onr lambda to another lambda into serverless workflows called state machines.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Functions 
+-----------------------------------------------------------------
+
+We can create function in 3 ways 
+1) Author from scratch
+2) Use a blueprint
+3) Container Image
+
+1) Scratch
+select runtime, architecture, role
+
+2) Use a blueprint
+Build lambda application from sample code and configuration 
+
+3) Container Image
+Select custom container image
+
+
+Functions Overview 
+-------------------------------------------------------------------
+
+1) Diagram 
+
+Throttle : It will block the requests or the invocations coming to the lambda functions
+          when we set the throttle or reserved concurrency to 0
+
+Export to Application Composer :
+          It's visual builder to design serverless application using multiple aws service
+
+Download function:
+          to download and share the functions
+
+Add trigger:
+          Integrate AWS service and other third party service to lamda func
+
+Add Destination:
+          Configure a destination to recieve invocation records
+          select source invocation type ( asyn invocation or even source mapping invocation)
+          condition -> send invocation records on success or failure
+          destination type -> services
+
+Code :
+      Write actual code
+
+Test : 
+      Create test event for the lambda func code
+
+Monitor :
+      To monitor the operations of lambda
+      Cloud watch logs, X ray traces, profiles, view lambda insight
+
+Configuration:
+      General configuration : Memory -> 128 Mb - 10 gb, Ephermal storage -> 512 Mb to 10 Gb, timeout -> 0 to 15 min
+      Trigger
+      permission 
+      Destinations  
+      function url
+      Environment variables : key value pairs for API keys, database connections, passwords, tokens , encryption keys
+      Tags : key value pairs to organise and manage resources
+      VPC : Allows lambda to access resources such as db and other service within the VPC
+      Montoring and operations tools 
+      Concurrency : Unreserved concurrency & reserved concurrency
+                    Unreserved : eg 10 concurrent execution can be used accross mutliple lambda in the account
+                    Reserved : if set to 2 concurrent execution this will be dedicated that lambda only
+                    Provisned concurrency -> Provisned resouces to handle incoming requests
+      Asynchronous : Retry attempt if function return error
+                     Dead letter queue - send unprocossed invocations to sqs or sns
+      Code Signing
+      
+
+
+2) Template:
+  In template which a sam template where we automate the creation of lamba functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
