@@ -1,0 +1,39 @@
+
+
+Whay is a DLQ ?
+
+Prevents message loss in case of failure
+Works only for Async invocation ( SNS, SQS, HTTP Client )
+Can 'hold' messages for reprocessing or broadcast event
+
+
+How it works ?
+
+Every event source  interact with invoke endpoint of lambda
+- Client sdk invokes endpoint and set your request asyncronously
+- SNS it's async env by definition, SNS will asyncronously try to deliver the message every time you publish a message if it finds any failure while sending
+the message it will try to retry over the course of approx 12 hrs, if you have sns retry policy enabled on SNS topic.
+- SQS it's a poling mechanism so when you put the message in queue it will get picked up the pulling the lambda and eventually process, now when this endpoint gets
+invoked what does it mean to succeed back no it doesn't mean the lambda process that message immediately, 
+lambda has internal queue,now the success the async invocation recieves is the successful insertion of message to lambda internal queue
+- Lamda process this internal queue message if it fails it retires 3 times then it abandons that messaghe and send it to dead letter queue
+- DLQ we have 12 options SQS, SNS, with SNS the message can be broadcasted to mail or mobile devices
+SQS will be useful to store failed messages in DLQ, so if we later try to change lambda reprocess this messages
+- failure can cause due to unexpected value, maybe one of the dependences of lambda goes down ex dynamo db throttling to due capacity limits.
+- Some will create secondry lambda to invoke DLQ message and reinvoke the original lambda with conetent SQS as arguments
+if you are using SQS as event source we can retransfer those message back to source queue.
+
+Pricing 
+--------
+Dependent on destination ( SNS or SQS )
+No extra charges
+
+
+Best Practices
+-------------
+Always have a DLQ to handle unexpected failure
+Have a plan to redrive messages
+Alarm on DLQ size ( Cloud watch alarm ) 
+
+
+
