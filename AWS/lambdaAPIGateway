@@ -1,0 +1,74 @@
+
+API Gateway Integration with Lambda
+-------------------------------------
+
+What is API gateway in AWS?
+It's used to create, publish, maintain, monitor and secure API like HTTP,REST, WebSocket
+It helps to connect non-AWS apps to connect to AWS backend resources
+
+Steps:
+1) Create lambda function with 4 steps
+    - parse input from API gateway
+    - Construct body for response object
+    - Construct response object
+    - return the API with response object
+
+2) Create API gateway 
+    - Create API gateway 
+    - select type of API( eg rest API)
+    - Create Resource
+    - Create Method ( eg GET)
+    - Integration type ( eg lambda ) note : enable proxy integration for structured event
+    - Stage ( environment type )
+    - deploy api
+
+3) Once API gateway deployed will get the invoke url 
+  pass the arguments ( eg : https://xehbreenaj.execute-api.us-east-1.amazonaws.com/prod/transactions?transactionId=5&type=PURCHASE&amount=501)
+  Above url with args will hit the lambda & will get response object
+
+
+
+
+
+
+
+
+
+
+
+# Code
+--------------
+
+import json
+
+print('Loading function')
+
+def lambda_handler(event, context):
+	#1. Parse out query string params we get from API gateway get method
+	print(event)
+	transactionId = event['queryStringParameters']['transactionId']
+	transactionType = event['queryStringParameters']['type']
+	transactionAmount = event['queryStringParameters']['amount']
+
+	print('transactionId=' + transactionId)
+	print('transactionType=' + transactionType)
+	print('transactionAmount=' + transactionAmount)
+
+	#2. Construct the body of the response object
+	transactionResponse = {}
+	transactionResponse['transactionId'] = transactionId
+	transactionResponse['type'] = transactionType
+	transactionResponse['amount'] = transactionAmount
+	transactionResponse['message'] = 'Hello from Lambda land'
+
+	#3. Construct http response object
+	responseObject = {}
+	responseObject['statusCode'] = 200
+	responseObject['headers'] = {}
+	responseObject['headers']['Content-Type'] = 'application/json'
+	responseObject['body'] = json.dumps(transactionResponse)
+
+	#4. Return the response object
+	return responseObject
+
+
