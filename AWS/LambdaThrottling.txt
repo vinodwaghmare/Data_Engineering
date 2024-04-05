@@ -1,0 +1,48 @@
+
+What is Throttling & why does it happen ?
+
+- Internal rejection of a request by lambda
+- Throttlling occurs when the concurrency execution count exceeds the concurrency limit
+- Lambda has by default 1000 concurrency limits
+- each account in same region contains this 1000 concurrency limits
+- Invocation event source mapping( manual, SQS, SNS, Kineses ) have different behaviours
+
+
+
+How it works an example ?
+
+Lets say we have 3 lambda functions, concurrency limit set 1000
+API gateway will send a burst of request for lambda func1 like 1000 request this will be served by lamda func1
+and now 10 requests comes to lambda func1 it will get throttle becomes already 1000 request occupied the concurrency
+On other hand lambda func2 and func3 get other request will get throttle 
+To resolve this provide reserved concurrency for critical lambda func
+
+
+
+Handling by event source and invocation type
+--------------------------------------------
+
+- SNS -> lambda = immediate failures
+- Manual ( sync) = immediate failures
+- Manual ( async) = Eventual failures
+-  SQS -> lambda = Evnetual failures
+- Kinesis -> dhynamoDBStream -> lambda = Immediate failures
+
+
+How to prevent best Practices ?
+------------------------------------------
+
+- Request Unreserved concurrency limit increase ( no cost)
+- Specify reserved concurrency invocations
+- Configure DLQ to capture failure
+- Alarm on throttling exeception
+
+Note:
+  in lambda func we can set exponential backoff ( means to retry the invocation after some delay)
+
+
+
+
+
+
+
