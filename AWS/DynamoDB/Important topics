@@ -1,0 +1,97 @@
+
+
+Dynamo NoSQL DB
+--------------------
+ - It's key value, columnar database
+ - Flexible schema
+ - Horizontal Scaling
+ - Columns in each row are different
+ - No relational 
+ - We can use SQL for querying
+ - Uses JSON for interaction
+ - Uses Partition key + sort key (optional) as primary key
+ - It's uses views and global indexes
+
+
+- 2 tables with same name in different region within one account can be treated as different table
+
+- It doesn't have relation so no table join which gives high query performance % they don't enfore strict relation
+
+- Only common each item in table should be present is the primary key.
+
+
+Data types in Dynamo DB
+------------------------------
+
+1) Scalar Types 
+ - Exactly one vaue
+ - string, boolean, null etc
+ - Keys or index attributes only support string,number & binary( compressd text, images) scalar types
+
+
+2) Set Types
+  - Multiple scalar values
+  - eg : string set, number set, binary set
+
+3) Document Types
+ - Complex structure with nested attributes
+ - eg : list and map
+ -  strucure over 32 level deep
+
+Asynchronous Replication
+------------------------
+
+- Dynamo db stores least 3 copies of the data on high speed SSD within a region
+- Act as Independent Failure Domains
+- Near real time replication
+
+
+Dynamo DB Read Consistency
+---------------------------
+
+1) Strong Consisteny
+ - The most up-to-date data
+ - Must be requested explicitly
+
+2) Eventual Consistency
+ - May or may not reflect the lastest copy of data
+ - Default consistency for all operations
+ - 50% cheaper
+
+
+DynampDB Capacity Units
+--------------------------
+
+Throughput Capacity
+ - Allows for performance at scale
+ - Used to control read/wrtie throughput
+ - Supports auto scaling
+ - Defined using RCUs and WCUs
+ - Major factor in Dynamodb pricing
+ - 1 capacity unit = 1 request/sec
+
+
+RCUs
+----------------------------
+ - 1 RCU = 1 strong consistent table reads/sec
+ - 1 RCU = 2 eventually consistent table reads/sec
+ - In blocks of 4 kB
+
+
+WCUs
+----------------------------
+  - Write Capacity Units
+  - 1 WCU = 1 table write/sec 
+  - In blocks of 1 kb 
+
+
+
+
+
+
+
+
+
+
+
+
