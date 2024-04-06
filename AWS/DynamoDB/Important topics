@@ -85,6 +85,75 @@ WCUs
   - In blocks of 1 kb 
 
 
+DynamoDb Capacity Units
+----------------------------
+
+Example
+ - Avg item size 10 kb
+ - Provisione Capacity : 10 RCUs ans 10 WCUs
+
+
+
+Burst Capacity
+----------------------------
+ - Provide for occasional burst or spikes
+ - 5 minutes or 300 sec of unused read & write capacity
+
+Scaling
+-------------------------
+ - Scalup as needed
+ - Scaling down - upto 4 times a day
+ - 1 partition supports upto 1000 WCUs or 3000 RCUs
+
+
+
+
+
+Dynamo DB partitions
+-----------------------------------
+ - A table have multipe partitions
+ - no . of table partitions depend on its size and provisioned capacity
+ - 1 partition = 10 gb of data
+ -  - 1 partition supports upto 1000 WCUs or 3000 RCUs
+
+
+
+DynamoDB Indexes 
+----------------------------------
+
+Table index:
+ - mandatory Primary Key - either simple or composite
+ - simple pk - only partition key
+ - Composite pk - parition key + sort key
+
+
+
+Secondary Indexes 
+-------------------------------------
+  - Local secondary index
+      - IF we need to create the local secondary at time of creation table
+      - here partition key and pk remains same 
+      - we can use only upto 5 local secondary index
+
+ - Global secondary 
+     - we can create at the time of table creation and even after creation
+     - because global seconday index creates their own partition which have it's on RCUs and WCUs
+     - strong capacity is not supported strong consistent
+     - we can have duplicate secondary indexes
+
+
+
+Interacting with DynamoDB
+--------------------------------------------
+ - AWS management console
+ - AWS CLI
+ - AWS SDK
+
+
+
+
+
+
 
 
 
