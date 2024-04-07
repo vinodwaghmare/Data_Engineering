@@ -131,16 +131,15 @@ Table index:
 Secondary Indexes 
 -------------------------------------
   - Local secondary index
-      - IF we need to create the local secondary at time of creation table
-      - here partition key and pk remains same 
-      - we can use only upto 5 local secondary index
+      - We can only create index at creation time but we can't delete the index
+       - here partition key and pk remain same 
+      - we can use only up to 5 local secondary index
 
- - Global secondary 
+ - Global Secondary index 
      - we can create at the time of table creation and even after creation
-     - because global seconday index creates their own partition which have it's on RCUs and WCUs
-     - strong capacity is not supported strong consistent
+     - because the global secondary index creates its own partition which and has it's own RCUs and WCUs
+     - strong capacity is not supported by strong consistent
      - we can have duplicate secondary indexes
-
 
 
 Interacting with DynamoDB
@@ -151,6 +150,44 @@ Interacting with DynamoDB
 
 
 
+Dynamo DB filter
+----------------------------------------------
+ - First, the DynamoDB performs the read using the specified index criteria & once the data, it filters it according to the filter criteria.
+ - Whether the filter or not the DynamoDB will consume RCUs.
+ - Avoid using scan operation because it will retrieve data from multiple partitions and consume RCUs fast, so prefer query.
+
+
+CLI 
+-------------------------------------------------
+
+Table level operations :
+
+  -  aws dynamodb list-tables
+
+  -  aws dynamodb describe-table help
+
+  -  aws dynamodb describe-table --table-name td_notes
+
+  -  aws dynamodb create-table --table-name td_notes_test --attribute-definitions AttributeName=user_id,AttributeType=S AttributeName=timestamp,AttributeType=N 
+     --key-schema AttributeName=user_id,KeyType=HASH AttributeName=timestamp,KeyType=RANGE 
+     --provisioned-throughput ReadCapacityUnits=1,Wri  teCapacityUnits=1
+
+  -  aws dynamodb delete-table --table-name td_notes_test
+
+Table item operations :
+
+  - aws dynamodb put-item --table-name td_notes_test --item file://item.json       
+
+  Update existing one item at a time
+  - aws dynamodb update-item --table-name td_notes_test --key file://key.json --update-expression 
+    "SET #t = :t" --expression-attribute-names file://attribute-names.json --expression-attribute-values file://attribute-values.json
+
+ delete one item at a time 
+  - aws dynamodb delete-item --table-name td_notes_test --key file://key.json  
+
+ Batch item ( we can add and delete multiple items from table at once ) 
+  - Batch can have 25 put or delete requests in batch 
+  - aws dynamodb batch-write-item --request-items file://items.json
 
 
 
